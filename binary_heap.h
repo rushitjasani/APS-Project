@@ -43,6 +43,9 @@ class MinHeap
 
     int get_min()
     {
+        if(heap_size==0)
+            return -1;
+            
         return arr[0];
     }
 
@@ -80,13 +83,26 @@ class MinHeap
         *y = temp;
     }
 
-    void decrease_key(int i, int new_val)
+    void decrease_key(int elem, int new_val)
     {
-        arr[i] = new_val;
-        while (i != 0 && arr[i / 2] > arr[i])
+        int i=-1;
+        for(int k=0;k<heap_size;k++)
         {
-            swap(&arr[i], &arr[i / 2]);
-            i = i / 2;
+            if(arr[k]==elem)
+            {
+                i=k;
+                break;
+            }
+        }
+        
+        if(i==-1 || arr[i]<=new_val)
+            return;
+
+        arr[i] = new_val;
+        while (i != 0 && arr[(i - 1) / 2] > arr[i])
+        {
+            swap(&arr[i], &arr[(i - 1) / 2]);
+            i = (i - 1) / 2;
         }
     }
 };

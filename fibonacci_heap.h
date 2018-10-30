@@ -86,6 +86,9 @@ class FibonacciHeap
 
     int get_min()
     {
+        if(heap==NULL)
+            return -1;
+            
         return heap->value;
     }
 
@@ -184,11 +187,34 @@ class FibonacciHeap
 
     int extract_min()
     {
+        if(heap == NULL) return -1;
         node *old = heap;
         heap = extract_min_helper(heap);
         int ret = old->value;
         delete old;
         return ret;
+    }
+
+    node *find_helper(node *heap, int value)
+    {
+        node *n = heap;
+        if (n == NULL)
+            return NULL;
+        do
+        {
+            if (n->value == value)
+                return n;
+            node *ret = find_helper(n->child, value);
+            if (ret)
+                return ret;
+            n = n->next;
+        } while (n != heap);
+        return NULL;
+    }
+
+    node *find(int value)
+    {
+        return find_helper(heap, value);
     }
 
     node *cut(node *heap, node *n)
@@ -241,8 +267,13 @@ class FibonacciHeap
         return heap;
     }
 
-    void decrease_key(node *n, int value)
+    void decrease_key(int i, int value)
     {
+        node *n = find(i);
+        if(n==NULL)
+        {
+            return;
+        }
         heap = decrease_key_helper(heap, n, value);
     }
 };
