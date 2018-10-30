@@ -1,74 +1,3 @@
-class MaxHeap
-{
-  public:
-    int *arr;
-    int max_size;
-    int heap_size;
-
-    MaxHeap(int n)
-    {
-        arr = new int[n];
-        max_size = n;
-        heap_size = 0;
-    }
-
-    void max_heapify(int i)
-    {
-        int l = 2 * i + 1;
-        int r = 2 * i + 2;
-        int largest;
-        if (l <= heap_size && arr[l] > arr[i])
-        {
-            largest = l;
-        }
-        else
-            largest = i;
-
-        if (r <= heap_size && arr[r] > arr[largest])
-            largest = r;
-
-        if (largest != i)
-        {
-            int temp = arr[i];
-            arr[i] = arr[largest];
-            arr[largest] = temp;
-            max_heapify(largest);
-        }
-    }
-
-    int get_max()
-    {
-        return arr[0];
-    }
-
-    int extract_max()
-    {
-
-        int max = arr[0];
-        arr[0] = arr[heap_size - 1];
-        heap_size--;
-        max_heapify(0);
-        return max;
-    }
-
-    void insert(int element)
-    {
-
-        heap_size++;
-        arr[heap_size - 1] = element;
-
-        int i = heap_size - 1;
-        while (i != 0 && arr[(i - 1) / 2] < arr[i])
-        {
-            int temp = arr[i];
-            arr[i] = arr[(i - 1) / 2];
-            arr[(i - 1) / 2] = temp;
-
-            i = (i - 1) / 2;
-        }
-    }
-};
-
 class MinHeap
 {
 
@@ -77,11 +6,15 @@ class MinHeap
     int max_size;
     int heap_size;
 
-    MinHeap(int n)
+    MinHeap()
     {
-        arr = new int[n];
-        max_size = n;
+        arr = new int[1000000];
+        max_size = 1000000;
         heap_size = 0;
+    }
+    ~MinHeap()
+    {
+        delete arr;
     }
 
     void min_heapify(int i)
@@ -137,6 +70,23 @@ class MinHeap
             arr[(i - 1) / 2] = temp;
 
             i = (i - 1) / 2;
+        }
+    }
+
+    void swap(int *x, int *y)
+    {
+        int temp = *x;
+        *x = *y;
+        *y = temp;
+    }
+
+    void decrease_key(int i, int new_val)
+    {
+        arr[i] = new_val;
+        while (i != 0 && arr[i / 2] > arr[i])
+        {
+            swap(&arr[i], &arr[i / 2]);
+            i = i / 2;
         }
     }
 };

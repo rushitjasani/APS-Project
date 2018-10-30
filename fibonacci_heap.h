@@ -20,6 +20,7 @@ class FibonacciHeap
     {
         heap = NULL;
     }
+
     ~FibonacciHeap()
     {
         if (heap)
@@ -54,6 +55,7 @@ class FibonacciHeap
         n->parent = NULL;
         return n;
     }
+
     node *merge_heaps(node *a, node *b)
     {
         if (!a)
@@ -74,6 +76,7 @@ class FibonacciHeap
         bp->next = an;
         return a;
     }
+
     node *insert(int value)
     {
         node *ret = create_node(value);
@@ -94,7 +97,7 @@ class FibonacciHeap
         parent->child = merge_heaps(parent->child, child);
     }
 
-    node *remove_min_helper(node *n)
+    node *extract_min_helper(node *n)
     {
         /* mark all childs as false and set their parent to null */
         if (n->child != NULL)
@@ -179,12 +182,67 @@ class FibonacciHeap
         return min;
     }
 
-    int remove_min()
+    int extract_min()
     {
         node *old = heap;
-        heap = remove_min_helper(heap);
+        heap = extract_min_helper(heap);
         int ret = old->value;
         delete old;
         return ret;
+    }
+
+    node *cut(node *heap, node *n)
+    {
+        if (n->next == n)
+        {
+            n->parent->child = NULL;
+        }
+        else
+        {
+            n->next->prev = n->prev;
+            n->prev->next = n->next;
+            n->parent->child = n->next;
+        }
+        n->next = n->prev = n;
+        n->marked = false;
+        return merge_heaps(heap, n);
+    }
+
+    node *decrease_key_helper(node *heap, node *n, int value)
+    {
+        if (n->value < value)
+            return heap;
+        n->value = value;
+        if (n->parent)
+        {
+            if (n->value < n->parent->value)
+            {
+                heap = cut(heap, n);
+                node *parent = n->parent;
+                n->parent = NULL;
+                while (parent != NULL && parent->marked)
+                {
+                    heap = cut(heap, parent);
+                    n = parent;
+                    parent = n->parent;
+                    n->parent = NULL;
+                }
+                if (parent != NULL && parent->parent != NULL)
+                    parent->marked = true;
+            }
+        }
+        else
+        {
+            if (n->value < heap->value)
+            {
+                heap = n;
+            }
+        }
+        return heap;
+    }
+
+    void decrease_key(node *n, int value)
+    {
+        heap = decrease_key_helper(heap, n, value);
     }
 };
