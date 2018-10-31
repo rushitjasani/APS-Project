@@ -189,7 +189,7 @@ class FibonacciHeap
 
     V extract_min()
     {
-        if(heap == NULL) return -1;
+        if(heap == NULL) return V();
         node<V> *old = heap;
         heap = extract_min_helper(heap);
         V ret = old->value;

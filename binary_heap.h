@@ -17,7 +17,7 @@ class MinHeap
     {
         delete arr;
     }
-
+    
     void min_heapify(int i)
     {
         int l = 2 * i + 1;

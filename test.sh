@@ -1,5 +1,5 @@
 #!/bin/bash
-rm fibo bin fibo_out bin_out
+rm fibo bin fibo_out bin_out input
 python testcase_generator.py > input
 echo "input file created"
 g++ -g fibonacci_heap_test.cpp -o fibo
