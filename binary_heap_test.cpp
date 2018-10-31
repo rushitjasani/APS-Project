@@ -1,12 +1,11 @@
 #include <bits/stdc++.h>
+#include <time.h>
 #include "binary_heap.h"
 using namespace std;
 
-int main()
+void solve(int n)
 {
-    MinHeap h;
-    long long n;
-    cin >> n;
+    MinHeap<int> h;
     while (n--)
     {
         /*
@@ -17,8 +16,8 @@ int main()
          */
         int c;
         cin >> c;
-        int inp=0;
-        int d_x,d_y;
+        int inp = 0;
+        int d_x, d_y;
         switch (c)
         {
             case 0:
@@ -26,12 +25,12 @@ int main()
                 h.insert(inp);
                 break;
             case 1:
-                cout << h.get_min()<<endl;
+                cout << h.get_min() << endl;
                 break;
             case 2:
                 h.extract_min();
                 break;
-            case 3: 
+            case 3:
                 cin >> d_x >> d_y;
                 h.decrease_key(d_x, d_y);
                 break;
@@ -39,5 +38,18 @@ int main()
                 break;
         }
     }
+}
+
+int main()
+{
+    long long n;
+    cin >> n;
+    clock_t begin = clock();
+    solve(n);
+    clock_t end = clock();
+    ofstream fout;
+    fout.open("bin_time",ios::out | ios::app);
+    fout << 1.0 * (end - begin) / CLOCKS_PER_SEC << endl;
+    fout.close();
     return 0;
 }

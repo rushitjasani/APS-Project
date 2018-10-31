@@ -2,11 +2,9 @@
 #include "fibonacci_heap.h"
 using namespace std;
 
-int main()
+void solve(int n)
 {
-    FibonacciHeap h;
-    long long n;
-    cin >> n;
+    FibonacciHeap<int> h;
     while (n--)
     {
         /*
@@ -39,5 +37,18 @@ int main()
                 break;
         }
     }
+}
+
+int main()
+{
+    long long n;
+    cin >> n;
+    clock_t begin = clock();
+    solve(n);
+    clock_t end = clock();
+    ofstream fout;
+    fout.open("fibo_time",ios::out | ios::app);
+    fout << 1.0 * (end - begin) / CLOCKS_PER_SEC << endl;
+    fout.close();
     return 0;
 }

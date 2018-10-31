@@ -1,20 +1,22 @@
 /* Node structure of fibonacci heap */
+template <class V>
 struct node
 {
   public:
-    node *prev;
-    node *next;
-    node *child;
-    node *parent;
-    int value;
+    node<V> *prev;
+    node<V> *next;
+    node<V> *child;
+    node<V> *parent;
+    V value;
     int degree;
     bool marked;
 };
 
+template <class V>
 class FibonacciHeap
 {
   public:
-    node *heap; /*root node of heap*/
+    node<V> *heap; /*root node of heap*/
 
     FibonacciHeap()
     {
@@ -29,14 +31,14 @@ class FibonacciHeap
         }
     }
 
-    void deleteAll(node *n)
+    void deleteAll(node<V> *n)
     {
         if (n)
         {
-            node *c = n;
+            node<V> *c = n;
             do
             {
-                node *d = c;
+                node<V> *d = c;
                 c = c->next;
                 deleteAll(d->child);
                 delete d;
@@ -44,9 +46,9 @@ class FibonacciHeap
         }
     }
 
-    node *create_node(int value)
+    node<V> *create_node(V value)
     {
-        node *n = new node;
+        node<V> *n = new node<V>;
         n->value = value;
         n->prev = n->next = n;
         n->degree = 0;
@@ -56,7 +58,7 @@ class FibonacciHeap
         return n;
     }
 
-    node *merge_heaps(node *a, node *b)
+    node<V> *merge_heaps(node<V> *a, node<V> *b)
     {
         if (!a)
             return b;
@@ -64,12 +66,12 @@ class FibonacciHeap
             return a;
         if (a->value > b->value)
         {
-            node *temp = a;
+            node<V> *temp = a;
             a = b;
             b = temp;
         }
-        node *an = a->next;
-        node *bp = b->prev;
+        node<V> *an = a->next;
+        node<V> *bp = b->prev;
         a->next = b;
         b->prev = a;
         an->prev = bp;
@@ -77,22 +79,22 @@ class FibonacciHeap
         return a;
     }
 
-    node *insert(int value)
+    node<V> *insert(V value)
     {
-        node *ret = create_node(value);
+        node<V> *ret = create_node(value);
         heap = merge_heaps(heap, ret);
         return ret;
     }
 
-    int get_min()
+    V get_min()
     {
         if(heap==NULL)
-            return -1;
+            return V();
             
         return heap->value;
     }
 
-    void addChild(node *parent, node *child)
+    void addChild(node<V> *parent, node<V> *child)
     {
         child->prev = child->next = child;
         child->parent = parent;
@@ -100,12 +102,12 @@ class FibonacciHeap
         parent->child = merge_heaps(parent->child, child);
     }
 
-    node *extract_min_helper(node *n)
+    node<V> *extract_min_helper(node<V> *n)
     {
         /* mark all childs as false and set their parent to null */
         if (n->child != NULL)
         {
-            node *c = n->child;
+            node<V> *c = n->child;
             do
             {
                 c->marked = false;
@@ -129,13 +131,13 @@ class FibonacciHeap
         if (n == NULL)
             return n;
 
-        node *trees[64] = {NULL};
+        node<V> *trees[64] = {NULL};
 
         while (true)
         {
             if (trees[n->degree] != NULL)
             {
-                node *t = trees[n->degree];
+                node<V> *t = trees[n->degree];
                 if (t == n)
                     break;
                 trees[n->degree] = NULL;
@@ -174,8 +176,8 @@ class FibonacciHeap
             }
             n = n->next;
         }
-        node *min = n;
-        node *start = n;
+        node<V> *min = n;
+        node<V> *start = n;
         do
         {
             if (n->value < min->value)
@@ -185,26 +187,26 @@ class FibonacciHeap
         return min;
     }
 
-    int extract_min()
+    V extract_min()
     {
         if(heap == NULL) return -1;
-        node *old = heap;
+        node<V> *old = heap;
         heap = extract_min_helper(heap);
-        int ret = old->value;
+        V ret = old->value;
         delete old;
         return ret;
     }
 
-    node *find_helper(node *heap, int value)
+    node<V> *find_helper(node<V> *heap, V value)
     {
-        node *n = heap;
+        node<V> *n = heap;
         if (n == NULL)
             return NULL;
         do
         {
             if (n->value == value)
                 return n;
-            node *ret = find_helper(n->child, value);
+            node<V> *ret = find_helper(n->child, value);
             if (ret)
                 return ret;
             n = n->next;
@@ -212,12 +214,12 @@ class FibonacciHeap
         return NULL;
     }
 
-    node *find(int value)
+    node<V> *find(V value)
     {
         return find_helper(heap, value);
     }
 
-    node *cut(node *heap, node *n)
+    node<V> *cut(node<V> *heap, node<V> *n)
     {
         if (n->next == n)
         {
@@ -234,7 +236,7 @@ class FibonacciHeap
         return merge_heaps(heap, n);
     }
 
-    node *decrease_key_helper(node *heap, node *n, int value)
+    node<V> *decrease_key_helper(node<V> *heap, node<V> *n, V value)
     {
         if (n->value < value)
             return heap;
@@ -244,7 +246,7 @@ class FibonacciHeap
             if (n->value < n->parent->value)
             {
                 heap = cut(heap, n);
-                node *parent = n->parent;
+                node<V> *parent = n->parent;
                 n->parent = NULL;
                 while (parent != NULL && parent->marked)
                 {
@@ -267,9 +269,9 @@ class FibonacciHeap
         return heap;
     }
 
-    void decrease_key(int i, int value)
+    void decrease_key(V i, V value)
     {
-        node *n = find(i);
+        node<V> *n = find(i);
         if(n==NULL)
         {
             return;

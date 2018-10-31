@@ -29,6 +29,7 @@ for i in xrange(n):
     elif opt==3:
         if len(s)==0:
             print 1
+            continue
         elif len(s)-1==0:
             index=0
         else:

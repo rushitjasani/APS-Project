@@ -1,14 +1,15 @@
+template <class V>
 class MinHeap
 {
 
   public:
-    int *arr;
+    V *arr;
     int max_size;
     int heap_size;
 
     MinHeap()
     {
-        arr = new int[1000000];
+        arr = new V[1000000];
         max_size = 1000000;
         heap_size = 0;
     }
@@ -34,32 +35,31 @@ class MinHeap
 
         if (smallest != i)
         {
-            int temp = arr[i];
+            V temp = arr[i];
             arr[i] = arr[smallest];
             arr[smallest] = temp;
             min_heapify(smallest);
         }
     }
 
-    int get_min()
+    V get_min()
     {
-        if(heap_size==0)
-            return -1;
-            
+        if (heap_size == 0)
+            return V();
+
         return arr[0];
     }
 
-    int extract_min()
+    V extract_min()
     {
-
-        int min = arr[0];
+        V min = arr[0];
         arr[0] = arr[heap_size - 1];
         heap_size--;
         min_heapify(0);
         return min;
     }
 
-    void insert(int element)
+    void insert(V element)
     {
 
         heap_size++;
@@ -68,34 +68,33 @@ class MinHeap
         int i = heap_size - 1;
         while (i != 0 && arr[(i - 1) / 2] > arr[i])
         {
-            int temp = arr[i];
+            V temp = arr[i];
             arr[i] = arr[(i - 1) / 2];
             arr[(i - 1) / 2] = temp;
-
             i = (i - 1) / 2;
         }
     }
 
-    void swap(int *x, int *y)
+    void swap(V *x, V *y)
     {
-        int temp = *x;
+        V temp = *x;
         *x = *y;
         *y = temp;
     }
 
-    void decrease_key(int elem, int new_val)
+    void decrease_key(V elem, V new_val)
     {
-        int i=-1;
-        for(int k=0;k<heap_size;k++)
+        int i = -1;
+        for (int k = 0; k < heap_size; k++)
         {
-            if(arr[k]==elem)
+            if (arr[k] == elem)
             {
-                i=k;
+                i = k;
                 break;
             }
         }
-        
-        if(i==-1 || arr[i]<=new_val)
+
+        if (i == -1 || arr[i] <= new_val)
             return;
 
         arr[i] = new_val;
