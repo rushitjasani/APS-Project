@@ -1,51 +1,70 @@
 #include <bits/stdc++.h>
 #include "binary_heap.h"
 using namespace std;
+#define INF 999999
 
 #define ll long long
 #define vpp vector<pair<ll, ll>>
 vector<bool> marked;
 
-ll prim(int x,vector<vpp>& adj)
+ll prim(int x, vector<vpp> &adj)
 {
-    MinHeap<pair <ll, ll > > Q;
+    MinHeap<pair<ll, ll>> Q;
+    for (int i = 1; i < adj.size(); i++)
+    {
+        Q.insert({INF, i});
+    }
     ll y;
     ll minimumCost = 0;
-    pair<ll,ll> p;
-    Q.insert(make_pair(0, x));
-    while(Q.heap_size != 0)
+    vector<int> darr(adj.size(), INF);
+    pair<ll, ll> p;
+    Q.decrease_key({INF, x}, {0, x});
+    darr[x] = 0;
+    while (Q.heap_size != 0)
     {
         p = Q.get_min();
         Q.extract_min();
         x = p.second;
-        if(marked[x] == true)
+        if (marked[x] == true)
             continue;
         minimumCost += p.first;
         marked[x] = true;
-        for(int i = 0;i < adj[x].size();++i)
+        for (int i = 0; i < adj[x].size(); ++i)
         {
             y = adj[x][i].second;
-            if(marked[y] == false)
-                Q.insert(adj[x][i]);
+            if (marked[y] == false && adj[x][i].first < darr[y])
+            {
+                int tmp = darr[y];
+                darr[y] = adj[x][i].first;
+                Q.decrease_key({tmp, y}, adj[x][i]);
+            }
         }
     }
     return minimumCost;
 }
 
-
 int main()
 {
-    int v,e;
+    int v, e;
     cin >> v >> e;
-    vector<vpp> adj(v+1);
-    marked.resize(v+1);
-    for( int i=0; i<e ;i++){
-        int u,v,w;
+    vector<vpp> adj(v + 1);
+    marked.resize(v + 1);
+    for (int i = 0; i < e; i++)
+    {
+        int u, v, w;
         cin >> u >> v >> w;
-        adj[u].push_back({w,v});
-        adj[v].push_back({w,u});
+        adj[u].push_back({w, v});
+        adj[v].push_back({w, u});
     }
-    ll minimumCost = prim(1, adj);
+    int k;
+    cin >> k;
+    clock_t begin = clock();
+    ll minimumCost = prim(k, adj);
+    clock_t end = clock();
+    ofstream fout;
+    fout.open("prims_bin_time", ios::out | ios::app);
+    fout << 1.0 * (end - begin) / CLOCKS_PER_SEC << endl;
+    fout.close();
     cout << minimumCost << endl;
     return 0;
 }
