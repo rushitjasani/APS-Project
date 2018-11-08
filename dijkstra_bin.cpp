@@ -9,7 +9,6 @@ vector<string> split_string(string);
 // Complete the shortestReach function below.
 vector<int> shortestReach(int n, vector<vector<int>> edges, int s)
 {
-
     vector<set<iPair>> g(n + 1);
     int test1 = edges.size();
     int u, v, w;
@@ -24,27 +23,31 @@ vector<int> shortestReach(int n, vector<vector<int>> edges, int s)
 
     MinHeap<iPair> pq;
 
+    for (int i = 1; i <= n; i++)
+    {
+        pq.insert({INF, i});
+    }
+
     vector<int> darr(n + 1, INF);
-    darr[s] = 0;       // source vertex dist is zero
-    pq.insert({0, s}); // insert zero, Source
+    darr[s] = 0; // source vertex dist is zero
+    pq.decrease_key({INF, s}, {0, s});
 
     while (pq.heap_size)
     {
-
         int u = pq.get_min().second;
         pq.extract_min();
 
         for (auto x : g[u])
         {
-
             int v = x.first;
             int weight = x.second;
 
             if (darr[v] > darr[u] + weight)
             {
                 // Updating distance of v
+                int tmp = darr[v];
                 darr[v] = darr[u] + weight;
-                pq.insert({darr[v], v});
+                pq.decrease_key({tmp, v}, {darr[v], v});
             }
         }
     }
@@ -95,8 +98,13 @@ int main()
         int s;
         cin >> s;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
+        clock_t begin = clock();
         vector<int> result = shortestReach(n, edges, s);
+        clock_t end = clock();
+        ofstream fout;
+        fout.open("dijk_bin_time", ios::out | ios::app);
+        fout << 1.0 * (end - begin) / CLOCKS_PER_SEC << endl;
+        fout.close();
 
         for (int i = 0; i < result.size(); i++)
         {
