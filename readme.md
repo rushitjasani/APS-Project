@@ -35,16 +35,16 @@ sudo apt-get install g++
 │ └── prims_fibo.cpp                prims's algorithm using fibonacci_heap
 ├── readme.md
 └── scripts 
-├── compare.py                      to check if fibo_out and bin_out are identical
-├── dijkstra_tc.py                  random test case generator for dijkstra's algorithm
-├── plot1.py                        plots graph of number of operations vs time for heap comparisons
-├── plot.py                         plots graph of number of vertices vs time for dijkstra's and prim's algorithm
-├── prims_tc.py                     random test case generator for prim's algorithm
-├── testcase_generator.py           random test case generator for heap comparison
-├── test_dij.sh                     script that generates random input using dijkstra_tc.py for comparison of dijkstra's algorithm
-├── test_prim.sh                    script that generates random input using prims_tc.py for comparison of prim's algorithm
-├── test.sh                         script that generates random input using testcase_generator.py for comparison of heaps
-└── tmp                             this folder contains all input, output, executables and files that stores time
+  ├── compare.py                      to check if fibo_out and bin_out are identical
+  ├── dijkstra_tc.py                  random test case generator for dijkstra's algorithm
+  ├── plot1.py                        plots graph of number of operations vs time for heap comparisons
+  ├── plot.py                         plots graph of number of vertices vs time for dijkstra's and prim's algorithm
+  ├── prims_tc.py                     random test case generator for prim's algorithm
+  ├── testcase_generator.py           random test case generator for heap comparison
+  ├── test_dij.sh                     script that generates random input using dijkstra_tc.py for comparison of dijkstra's algorithm
+  ├── test_prim.sh                    script that generates random input using prims_tc.py for comparison of prim's algorithm
+  ├── test.sh                         script that generates random input using testcase_generator.py for comparison of heaps
+  └── tmp                             this folder contains all input, output, executables and files that stores time
 ```
 
 ## To check heaps manually
