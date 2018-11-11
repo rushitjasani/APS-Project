@@ -1,8 +1,10 @@
 import random
+import sys
 from sortedcontainers import SortedSet
 
-n = int(raw_input())
+# n = int(raw_input())
 # n=100
+n = int(sys.argv[1])
 s=SortedSet()
 
 def gen_random(r):

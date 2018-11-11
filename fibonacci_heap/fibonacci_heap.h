@@ -58,7 +58,7 @@ class FibonacciHeap
         return n;
     }
 
-    node<V> *merge_heaps(node<V> *a, node<V> *b)
+    node<V> *merge_heaps(node<V> *a, node<V> *b)/**/
     {
         if (!a)
             return b;
@@ -79,14 +79,14 @@ class FibonacciHeap
         return a;
     }
 
-    node<V> *insert(V value)
+    node<V> *insert(V value)/**/
     {
         node<V> *ret = create_node(value);
         heap = merge_heaps(heap, ret);
         return ret;
     }
 
-    V get_min()
+    V get_min()/**/
     {
         if(heap==NULL)
             return V();
@@ -187,7 +187,7 @@ class FibonacciHeap
         return min;
     }
 
-    V extract_min()
+    V extract_min()/**/
     {
         if(heap == NULL) return V();
         node<V> *old = heap;
@@ -269,7 +269,7 @@ class FibonacciHeap
         return heap;
     }
 
-    void decrease_key(V i, V value)
+    void decrease_key(V i, V value)/**/
     {
         node<V> *n = find(i);
         if(n==NULL)

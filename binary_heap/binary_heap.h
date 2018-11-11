@@ -15,7 +15,7 @@ class MinHeap
     }
     ~MinHeap()
     {
-        delete arr;
+        // delete arr;
     }
     
     void min_heapify(int i)
@@ -52,6 +52,7 @@ class MinHeap
 
     V extract_min()
     {
+        if(heap_size == 0) return V();
         V min = arr[0];
         arr[0] = arr[heap_size - 1];
         heap_size--;

@@ -1,11 +1,10 @@
 #include <bits/stdc++.h>
-#include <time.h>
-#include "binary_heap.h"
+#include "fibonacci_heap.h"
 using namespace std;
 
 void solve(int n)
 {
-    MinHeap<int> h;
+    FibonacciHeap<int> h;
     while (n--)
     {
         /*
@@ -16,7 +15,7 @@ void solve(int n)
          */
         int c;
         cin >> c;
-        int inp = 0;
+        int inp=0;
         int d_x, d_y;
         switch (c)
         {
@@ -25,12 +24,12 @@ void solve(int n)
                 h.insert(inp);
                 break;
             case 1:
-                cout << h.get_min() << endl;
+                cout << h.get_min()<<endl;
                 break;
             case 2:
                 h.extract_min();
                 break;
-            case 3:
+            case 3: 
                 cin >> d_x >> d_y;
                 h.decrease_key(d_x, d_y);
                 break;
@@ -48,7 +47,7 @@ int main()
     solve(n);
     clock_t end = clock();
     ofstream fout;
-    fout.open("bin_time",ios::out | ios::app);
+    fout.open("tmp/fibo_time",ios::out | ios::app);
     fout << 1.0 * (end - begin) / CLOCKS_PER_SEC << endl;
     fout.close();
     return 0;

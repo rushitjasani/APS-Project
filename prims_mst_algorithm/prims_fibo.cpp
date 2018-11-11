@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "fibonacci_heap.h"
+#include "../fibonacci_heap/fibonacci_heap.h"
 #define INF 999999
 using namespace std;
 
@@ -62,7 +62,7 @@ int main()
     ll minimumCost = prim(k, adj);
     clock_t end = clock();
     ofstream fout;
-    fout.open("prims_fibo_time", ios::out | ios::app);
+    fout.open("tmp/fibo_time", ios::out | ios::app);
     fout << 1.0 * (end - begin) / CLOCKS_PER_SEC << endl;
     fout.close();
     cout << minimumCost << endl;

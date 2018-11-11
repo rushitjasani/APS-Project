@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "fibonacci_heap.h"
+#include "../fibonacci_heap/fibonacci_heap.h"
 
 using namespace std;
 
@@ -106,7 +106,7 @@ int main()
         vector<int> result = shortestReach(n, edges, s);
         clock_t end = clock();
         ofstream fout;
-        fout.open("dijk_fibo_time", ios::out | ios::app);
+        fout.open("fibo_time", ios::out | ios::app);
         fout << 1.0 * (end - begin) / CLOCKS_PER_SEC << endl;
         fout.close();
 

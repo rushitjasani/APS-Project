@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "binary_heap.h"
+#include "../binary_heap/binary_heap.h"
 using namespace std;
 
 typedef pair<int, int> iPair;
@@ -102,7 +102,7 @@ int main()
         vector<int> result = shortestReach(n, edges, s);
         clock_t end = clock();
         ofstream fout;
-        fout.open("dijk_bin_time", ios::out | ios::app);
+        fout.open("bin_time", ios::out | ios::app);
         fout << 1.0 * (end - begin) / CLOCKS_PER_SEC << endl;
         fout.close();
 

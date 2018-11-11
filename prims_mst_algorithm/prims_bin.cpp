@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "binary_heap.h"
+#include "../binary_heap/binary_heap.h"
 using namespace std;
 #define INF 999999
 
@@ -62,7 +62,7 @@ int main()
     ll minimumCost = prim(k, adj);
     clock_t end = clock();
     ofstream fout;
-    fout.open("prims_bin_time", ios::out | ios::app);
+    fout.open("tmp/bin_time", ios::out | ios::app);
     fout << 1.0 * (end - begin) / CLOCKS_PER_SEC << endl;
     fout.close();
     cout << minimumCost << endl;
